@@ -3,8 +3,17 @@ package Scheduling;
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		FCFS fcfs = new FCFS("H:/Computer Science Department/Level 3_Second Semester/Advanced Operating System/Assignments/Assignment 2/Disk Scheduling/src/Scheduling/data.txt");
+		
+		System.out.println("********************** First Come First Serve ***********************");
+		fcfs.setHeadStart(53);
+		fcfs.applyAlgorithm();
+		
+		SSTF sstf = new SSTF("H:/Computer Science Department/Level 3_Second Semester/Advanced Operating System/Assignments/Assignment 2/Disk Scheduling/src/Scheduling/data.txt");
+		
+		System.out.println("********************** Shortest Seek Time First ***********************");
+		sstf.setHeadStart(53);
+		sstf.applyAlgorithm();
 	}
 
 }
