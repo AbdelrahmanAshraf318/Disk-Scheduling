@@ -16,6 +16,7 @@ public class SCAN implements Strategies{
 	private String moveToward;
 	private ArrayList<Integer> theLeft;
 	private ArrayList<Integer> theRight;
+	private int diskSize; 
 	
 	public SCAN() {
 		this.fileName = "";
@@ -25,12 +26,14 @@ public class SCAN implements Strategies{
 		this.totalHeadMovement = 0;
 		this.moveToward = "";
 		this.theLeft = new ArrayList<Integer>();
-		this.theRight = new ArrayList<Integer>(); 
+		this.theRight = new ArrayList<Integer>();
+		this.diskSize = 0;
 	}
-	public SCAN(String fileName , String moveToward)
+	public SCAN(String fileName , String moveToward , int diskSize)
 	{
 		this.fileName = fileName;
 		this.moveToward = moveToward;
+		this.diskSize = diskSize;
 	}
 	
 	 
@@ -42,6 +45,14 @@ public class SCAN implements Strategies{
 		this.headStart = headStart;
 	}
 	
+	
+	
+	public int getDiskSize() {
+		return diskSize;
+	}
+	public void setDiskSize(int diskSize) {
+		this.diskSize = diskSize;
+	}
 	private ArrayList<Integer> readFile()
 	{
 		this.file = new File(this.fileName);
@@ -62,9 +73,38 @@ public class SCAN implements Strategies{
 
 	}
 	
-	private void splitTheCylinderArray()
+	private ArrayList<Integer> splitTheLeftData()
 	{
-		
+		ArrayList<Integer> tempLeftData = new ArrayList<Integer>();
+		for(int i=0 ; i<this.cylinderData.size() ; i++)
+		{
+			if(this.cylinderData.get(i) < this.headStart)
+			{
+				tempLeftData.add(this.cylinderData.get(i));
+			}
+		}
+		if(this.moveToward == "Left" || this.moveToward == "left")
+		{
+			tempLeftData.add(0);
+		}
+		return tempLeftData;
+	}
+	
+	private ArrayList<Integer> splitTheRightData()
+	{
+		ArrayList<Integer> tempLeftData = new ArrayList<Integer>();
+		for(int i=0 ; i<this.cylinderData.size() ; i++)
+		{
+			if(this.cylinderData.get(i) >= this.headStart)
+			{
+				tempLeftData.add(this.cylinderData.get(i));
+			}
+		}
+		if(this.moveToward == "Right" || this.moveToward == "right")
+		{
+			tempLeftData.add(this.diskSize);
+		}
+		return tempLeftData;
 	}
 	
 	@Override
@@ -73,14 +113,49 @@ public class SCAN implements Strategies{
 		ArrayList<Integer> data = new ArrayList<Integer>();
 		data = readFile();
 		boolean pass = false;
-		/*Collections.sort(data , Collections.reverseOrder());
-		Collections.sort(this.cylinderData , Collections.reverseOrder());*/
+		this.theLeft = splitTheLeftData();
+		this.theRight = splitTheRightData();
+		Collections.sort(this.theLeft , Collections.reverseOrder());
+		Collections.sort(this.theRight);
 		
 		System.out.print("The head sequence will be: ");
 		System.out.print("<");
-		System.out.print(this.headStart + " ");
-		
-		
+
+		if(this.moveToward == "left" || this.moveToward == "Left")
+		{
+			for(int i=0 ; i<this.theLeft.size() ; i++)
+			{
+				System.out.print(this.theLeft.get(i) + " ");
+				this.totalHeadMovement += Math.abs(this.theLeft.get(i) - 
+						this.headStart);
+				this.headStart = this.theLeft.get(i);
+			}
+			for(int i=0 ; i<this.theRight.size() ; i++)
+			{
+				System.out.print(this.theRight.get(i) + " ");
+				this.totalHeadMovement += Math.abs(this.theRight.get(i) - 
+						this.headStart);
+				this.headStart = this.theRight.get(i);
+				
+			}
+		}
+		else
+		{
+			for(int i=0 ; i<this.theRight.size() ; i++)
+			{
+				this.totalHeadMovement += Math.abs(this.theRight.get(i) - 
+						this.headStart);
+				this.headStart = this.theRight.get(i);
+				System.out.print(this.theRight.get(i) + " ");
+			}
+			for(int i=0 ; i<this.theLeft.size() ; i++)
+			{
+				System.out.print(this.theLeft.get(i) + " ");
+				this.totalHeadMovement += Math.abs(this.theLeft.get(i) - 
+						this.headStart);
+				this.headStart = this.theLeft.get(i);
+			}
+		}
 		
 		System.out.print(">");
 		System.out.println();
