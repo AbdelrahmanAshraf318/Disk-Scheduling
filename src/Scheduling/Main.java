@@ -43,6 +43,12 @@ public class Main {
 		look.setHeadStart(headStart);
 		look.applyAlgorithm();
 		
+		C_LOOK clook = new C_LOOK("H:/Computer Science Department/Level 3_Second Semester/Advanced Operating System/Assignments/Assignment 2/Disk Scheduling/src/Scheduling/data.txt" , "right");
+		
+		System.out.println("********************** C-LOOK Algorithm ***********************");
+		clook.setHeadStart(headStart);
+		clook.applyAlgorithm();
+		
 	}
 
 }

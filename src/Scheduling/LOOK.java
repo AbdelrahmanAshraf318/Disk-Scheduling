@@ -104,7 +104,7 @@ public class LOOK implements Strategies{
 		System.out.print("The head sequence will be: ");
 		System.out.print("<");
 
-		if(this.moveToward == "left" || this.moveToward == "Left")
+		if(this.moveToward.equals("left") || this.moveToward.equals("Left"))
 		{
 			for(int i=0 ; i<this.theLeft.size() ; i++)
 			{

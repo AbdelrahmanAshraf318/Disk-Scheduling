@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-public class SCAN implements Strategies{
+public class C_LOOK implements Strategies{
 
 	private String fileName;
 	private File file;
@@ -16,9 +16,9 @@ public class SCAN implements Strategies{
 	private String moveToward;
 	private ArrayList<Integer> theLeft;
 	private ArrayList<Integer> theRight;
-	private int diskSize; 
+
 	
-	public SCAN() {
+	public C_LOOK() {
 		this.fileName = "";
 		this.file = null;
 		this.cylinderData = new ArrayList<Integer>();
@@ -27,16 +27,12 @@ public class SCAN implements Strategies{
 		this.moveToward = "";
 		this.theLeft = new ArrayList<Integer>();
 		this.theRight = new ArrayList<Integer>();
-		this.diskSize = 0;
 	}
-	public SCAN(String fileName , String moveToward , int diskSize)
+	public C_LOOK(String fileName , String moveToward)
 	{
 		this.fileName = fileName;
 		this.moveToward = moveToward;
-		this.diskSize = diskSize;
 	}
-	
-	 
 	
 	public int getHeadStart() {
 		return headStart;
@@ -46,13 +42,6 @@ public class SCAN implements Strategies{
 	}
 	
 	
-	
-	public int getDiskSize() {
-		return diskSize;
-	}
-	public void setDiskSize(int diskSize) {
-		this.diskSize = diskSize;
-	}
 	private ArrayList<Integer> readFile()
 	{
 		this.file = new File(this.fileName);
@@ -73,6 +62,7 @@ public class SCAN implements Strategies{
 
 	}
 	
+	
 	private ArrayList<Integer> splitTheLeftData()
 	{
 		ArrayList<Integer> tempLeftData = new ArrayList<Integer>();
@@ -82,10 +72,6 @@ public class SCAN implements Strategies{
 			{
 				tempLeftData.add(this.cylinderData.get(i));
 			}
-		}
-		if(this.moveToward.equals("left") || this.moveToward.equals("Left"))
-		{
-			tempLeftData.add(0);
 		}
 		return tempLeftData;
 	}
@@ -100,10 +86,6 @@ public class SCAN implements Strategies{
 				tempLeftData.add(this.cylinderData.get(i));
 			}
 		}
-		if(this.moveToward.equals("right") || this.moveToward.equals("Right"))
-		{
-			tempLeftData.add(this.diskSize);
-		}
 		return tempLeftData;
 	}
 	
@@ -115,8 +97,17 @@ public class SCAN implements Strategies{
 		boolean pass = false;
 		this.theLeft = splitTheLeftData();
 		this.theRight = splitTheRightData();
-		Collections.sort(this.theLeft , Collections.reverseOrder());
-		Collections.sort(this.theRight);
+		
+		if(this.moveToward.equals("right") || this.moveToward.equals("Right"))
+		{
+			Collections.sort(this.theLeft);
+			Collections.sort(this.theRight);
+		}
+		else
+		{
+			Collections.sort(this.theLeft , Collections.reverseOrder());
+			Collections.sort(this.theRight , Collections.reverseOrder());
+		}
 		
 		System.out.print("The head sequence will be: ");
 		System.out.print("<");
@@ -160,7 +151,7 @@ public class SCAN implements Strategies{
 		System.out.print(">");
 		System.out.println();
 		System.out.println("The total movement = " + this.totalHeadMovement);
-
-		}
-
+		
+	}
+	
 }
