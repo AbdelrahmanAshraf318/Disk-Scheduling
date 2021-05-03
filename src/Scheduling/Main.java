@@ -37,6 +37,12 @@ public class Main {
 		cscan.setHeadStart(headStart);
 		cscan.applyAlgorithm();
 		
+		LOOK look = new LOOK("H:/Computer Science Department/Level 3_Second Semester/Advanced Operating System/Assignments/Assignment 2/Disk Scheduling/src/Scheduling/data.txt" , "right");
+		
+		System.out.println("********************** LOOK Algorithm ***********************");
+		look.setHeadStart(headStart);
+		look.applyAlgorithm();
+		
 	}
 
 }
