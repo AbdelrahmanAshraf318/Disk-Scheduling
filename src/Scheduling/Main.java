@@ -49,6 +49,11 @@ public class Main {
 		clook.setHeadStart(headStart);
 		clook.applyAlgorithm();
 		
+		ProposedNewOptimized optimal = new ProposedNewOptimized("H:/Computer Science Department/Level 3_Second Semester/Advanced Operating System/Assignments/Assignment 2/Disk Scheduling/src/Scheduling/data.txt");
+		
+		System.out.println("********************** Proposed NewOptimized Algorithm ***********************");
+		optimal.applyAlgorithm();
+		
 	}
 
 }
